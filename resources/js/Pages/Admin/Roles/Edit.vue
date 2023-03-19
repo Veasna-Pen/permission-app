@@ -7,8 +7,15 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
+const props = defineProps({
+    role: {
+        type: Object,
+        required: true,
+    }
+})
+
 const form = useForm({
-    name: ''
+    name: props.role.name
 })
 
 
@@ -33,7 +40,7 @@ const form = useForm({
                     </div>
 
                    <div class="sm:px-4 pt-5 bg-slate-100 shadow-lg rounded-lg">
-                    <form @submit.prevent="form.post(route('roles.store'))">
+                    <form @submit.prevent="form.put(route('roles.update', role.id))">
                         <div>
                             <InputLabel for="name" value="Name" />
 
@@ -46,7 +53,7 @@ const form = useForm({
                         <div class="flex items-center justify-end mt-4">
                             <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing">
-                                Create
+                                Update
                             </PrimaryButton>
                         </div>
                     </form>
