@@ -6,9 +6,15 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import VueMultiselect from 'vue-multiselect'
+
+defineProps({
+    permissions: Array,
+})
 
 const form = useForm({
-    name: ''
+    name: '',
+    permissions: [],
 })
 
 
@@ -21,7 +27,7 @@ const form = useForm({
 
         <div class="py-3">
             <div class="max-w-full mx-auto sm:px-1 lg:px-1">
-                <div class="bg-white overflow-hidden sm:rounded-lg">
+                <div class="bg-white sm:rounded-lg">
                     <div class="p-4 sm:px-4 bg-gray-100 border-b border-gray-200">
                         <div class="flex justify-between items-center">
                             <div>
@@ -43,6 +49,12 @@ const form = useForm({
                             <InputError class="mt-2" :message="form.errors.name" />
                         </div>
 
+                        <div class="mt-4">
+                                <InputLabel for="permissions" value="Permissions" />
+                                <VueMultiselect v-model="form.permissions" :options="permissions" :multiple="true"
+                                    :close-on-select="true" placeholder="Pick some" label="name" track-by="id" />
+                            </div>
+
                         <div class="flex items-center justify-end mt-4">
                             <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing">
@@ -57,3 +69,4 @@ const form = useForm({
         </div>
     </AdminLayout>
 </template>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
