@@ -23,7 +23,7 @@ const form = useForm({
 })
 
 onMounted(() => {
-  form.permissions = props.role?.permissions;
+    form.permissions = props.role?.permissions;
 });
 
 watch(
@@ -70,7 +70,7 @@ watch(
                             </div>
 
                             <div class="flex items-center justify-end mt-4">
-                                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }"
+                                <PrimaryButton class="m-2" :class="{ 'opacity-25': form.processing }"
                                     :disabled="form.processing">
                                     Update
                                 </PrimaryButton>
@@ -79,8 +79,16 @@ watch(
                     </div>
                 </div>
 
-                <!-- show role -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg pt-3">
+                <div class="p-2 sm:px-4 mt-4 bg-slate-100 shadow-lg rounded-lg">
+                    <div class="p-2 sm:px-4 bg-gray-100 font-medium border-b border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h1>Permissions</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- show role -->
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg pt-2">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -106,18 +114,21 @@ watch(
                                         {{ rolePermission.name }}
                                     </td>
                                     <td class="flex py-4 px-6 space-x-2">
-                                        <Link :href="route('roles.permissions.destroy', [role.id, rolePermission.id])" class="hover:bg-red-100"
-                                            method="delete" as="button" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                                                <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
-                                            </svg>
+                                        <Link :href="route('roles.permissions.destroy', [role.id, rolePermission.id])"
+                                            class="hover:bg-red-100" method="delete" as="button" type="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            class="w-6 h-6">
+                                            <path fill-rule="evenodd"
+                                                d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                                                clip-rule="evenodd" />
+                                        </svg>
                                         </Link>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
+                </div>
             </div>
         </div>
     </AdminLayout>
