@@ -42,6 +42,11 @@ const { hasRole } = usePermission()
                                  :href="route('admin.index')" :active="route().current('admin.index')">
                                     Admin
                                 </NavLink>
+
+                                <NavLink
+                                 :href="route('posts.index')" :active="route().current('posts.index')">
+                                    Post
+                                </NavLink>
                             </div>
 
                         </div>
