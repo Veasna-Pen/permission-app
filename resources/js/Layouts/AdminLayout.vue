@@ -7,8 +7,10 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 import SidebarLink from '@/Components/SidebarLink.vue';
+import { usePermission } from '@/Composable/Permission'
 
 const showingNavigationDropdown = ref(false);
+const { hasRole } = usePermission();
 </script>
 
 <template>
@@ -18,76 +20,78 @@ const showingNavigationDropdown = ref(false);
             <div>
                 <div class="-mx-6 px-6 py-4">
                     <Link href="/dashboard" title="home">
-                        <img src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg" class="w-32"
-                            alt="tailus logo">
+                    <h1 class="text-xl"> {{ $page.props.auth.user.name }}</h1>
                     </Link>
                 </div>
 
 
 
                 <ul class="space-y-2 tracking-wide mt-8">
-                    <li>
-                        <SidebarLink :href="route('admin.index')" :active="route().current('admin.index')">
-                            <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
-                                <path
-                                    d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current text-cyan-400 dark:fill-slate-600"></path>
-                                <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
-                                    class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
-                                <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current group-hover:text-sky-300"></path>
-                            </svg>
-                            <span class="-mr-1 font-medium">Home</span>
-                        </SidebarLink>
-                    </li>
-                    <li>
-                        <SidebarLink :href="route('users.index')" aria-label="dashboard"
-                          :active="route().current('users.index')">
-                            <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
-                                <path
-                                    d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current text-cyan-400 dark:fill-slate-600"></path>
-                                <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
-                                    class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
-                                <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current group-hover:text-sky-300"></path>
-                            </svg>
-                            <span class="-mr-1 font-medium">Users</span>
-                        </SidebarLink>
-                    </li>
-                    <li>
-                        <SidebarLink :href="route('roles.index')" aria-label="dashboard"
-                          :active="route().current('roles.index')">
-                            <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
-                                <path
-                                    d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current text-cyan-400 dark:fill-slate-600"></path>
-                                <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
-                                    class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
-                                <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current group-hover:text-sky-300"></path>
-                            </svg>
-                            <span class="-mr-1 font-medium">Roles</span>
-                        </SidebarLink>
-                    </li>
-                    <li>
-                        <SidebarLink :href="route('permissions.index')" aria-label="dashboard"
-                          :active="route().current('permissions.index')">
-                            <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
-                                <path
-                                    d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current text-cyan-400 dark:fill-slate-600"></path>
-                                <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
-                                    class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
-                                <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current group-hover:text-sky-300"></path>
-                            </svg>
-                            <span class="-mr-1 font-medium">Permissions</span>
-                        </SidebarLink>
-                    </li>
+
+                    <template v-if="hasRole('admin')">
+                        <li>
+                            <SidebarLink :href="route('admin.index')" :active="route().current('admin.index')">
+                                <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current text-cyan-400 dark:fill-slate-600"></path>
+                                    <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
+                                        class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
+                                    <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current group-hover:text-sky-300"></path>
+                                </svg>
+                                <span class="-mr-1 font-medium">Home</span>
+                            </SidebarLink>
+                        </li>
+                        <li>
+                            <SidebarLink :href="route('users.index')" aria-label="dashboard"
+                                :active="route().current('users.index')">
+                                <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current text-cyan-400 dark:fill-slate-600"></path>
+                                    <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
+                                        class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
+                                    <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current group-hover:text-sky-300"></path>
+                                </svg>
+                                <span class="-mr-1 font-medium">Users</span>
+                            </SidebarLink>
+                        </li>
+                        <li>
+                            <SidebarLink :href="route('roles.index')" aria-label="dashboard"
+                                :active="route().current('roles.index')">
+                                <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current text-cyan-400 dark:fill-slate-600"></path>
+                                    <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
+                                        class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
+                                    <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current group-hover:text-sky-300"></path>
+                                </svg>
+                                <span class="-mr-1 font-medium">Roles</span>
+                            </SidebarLink>
+                        </li>
+                        <li>
+                            <SidebarLink :href="route('permissions.index')" aria-label="dashboard"
+                                :active="route().current('permissions.index')">
+                                <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current text-cyan-400 dark:fill-slate-600"></path>
+                                    <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
+                                        class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
+                                    <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current group-hover:text-sky-300"></path>
+                                </svg>
+                                <span class="-mr-1 font-medium">Permissions</span>
+                            </SidebarLink>
+                        </li>
+                    </template>
                     <li>
                         <SidebarLink :href="route('posts.index')" aria-label="dashboard"
-                          :active="route().current('posts.index')">
+                            :active="route().current('posts.index')">
                             <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
                                 <path
                                     d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
@@ -104,13 +108,14 @@ const showingNavigationDropdown = ref(false);
             </div>
 
             <div class="px-6 -mx-6 pt-4 flex justify-between items-center border-t">
-                <Link :href="route('logout')" method="post" as="button" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    <span class="group-hover:text-blue-700">Logout</span>
+                <Link :href="route('logout')" method="post" as="button"
+                    class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                <span class="group-hover:text-blue-700">Logout</span>
                 </Link>
             </div>
         </aside>
@@ -176,5 +181,4 @@ const showingNavigationDropdown = ref(false);
             </div>
         </div>
     </div>
-
 </template>
