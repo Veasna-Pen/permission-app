@@ -37,7 +37,7 @@ const showingNavigationDropdown = ref(false);
                                 <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
                                     class="fill-current group-hover:text-sky-300"></path>
                             </svg>
-                            <span class="-mr-1 font-medium">Dashboard</span>
+                            <span class="-mr-1 font-medium">Home</span>
                         </SidebarLink>
                     </li>
                     <li>
