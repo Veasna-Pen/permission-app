@@ -1,38 +1,66 @@
 <template>
-    <nav class="pagination">
-      <ul>
-        <li v-if="pagination.prev">
-          <Link :href="pagination.prev_url">Previous</Link>
-        </li>
-        <li v-else>Previous</li>
-
-        <li v-for="(page, index) in pages" :key="index">
-          <Link :href="page.url" :class="{ 'is-current': page.active }">
-            {{ page.label }}
-          </Link>
-        </li>
-
-        <li v-if="pagination.next">
-          <Link :href="pagination.next_url">Next</Link>
-        </li>
-        <li v-else>Next</li>
-      </ul>
-    </nav>
+    <div class="flex justify-between items-center">
+      <div>
+        <span class="text-sm leading-5 text-gray-700 dark:text-gray-300">
+          Showing
+          <span class="font-medium">{{ start }}</span>
+          to
+          <span class="font-medium">{{ end }}</span>
+          of
+          <span class="font-medium">{{ total }}</span>
+          results
+        </span>
+      </div>
+      <div class="flex-1 flex justify-end">
+        <span v-if="currentPage > 1" @click="onPageChange(currentPage - 1)" class="cursor-pointer leading-5 rounded-md border border-gray-300 dark:border-gray-500 px-3 py-2 mr-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+          Previous
+        </span>
+        <span v-for="page in pages" :key="page" @click="onPageChange(page)" :class="{'font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:text-gray-500 hover:bg-gray-50 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150': page === currentPage, 'text-gray-500 dark:text-gray-300': page !== currentPage }" class="cursor-pointer leading-5 rounded-md border border-gray-300 dark:border-gray-500 px-3 py-2 mr-2 text-sm font-medium">
+          {{ page }}
+        </span>
+        <span v-if="currentPage < totalPages" @click="onPageChange(currentPage + 1)" class="cursor-pointer leading-5 rounded-md border border-gray-300 dark:border-gray-500 px-3 py-2 mr-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+          Next
+        </span>
+      </div>
+    </div>
   </template>
 
   <script setup>
-import { Link } from '@inertiajs/vue3'
+  import { ref, computed } from 'vue';
 
   const props = defineProps({
-    pagination: {
-      type: Object,
+    currentPage: {
+      type: Number,
       required: true,
     },
-  })
+    perPage: {
+      type: Number,
+      required: true,
+    },
+    total: {
+      type: Number,
+      required: true,
+    },
+  });
 
-  const pages = pagination.links.map(link => ({
-    url: link.url,
-    label: link.label,
-    active: link.active,
-  }))
+  const start = computed(() => (props.currentPage - 1) * props.perPage + 1);
+
+  const end = computed(() => {
+    const lastItem = props.currentPage * props.perPage;
+    return lastItem < props.total ? lastItem : props.total;
+  });
+
+  const totalPages = computed(() => Math.ceil(props.total / props.perPage));
+
+  const pages = computed(() => {
+    const range = [];
+    for (let i = 1; i <= totalPages.value; i++) {
+      range.push(i);
+    }
+    return range;
+  });
+
+  const onPageChange = (page) => {
+    emit('pageChange', page);
+  };
   </script>

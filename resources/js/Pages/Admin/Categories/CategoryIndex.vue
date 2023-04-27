@@ -25,13 +25,13 @@ const closeModal = () => {
 }
 
 const deletePost = (id) => {
-    form.delete(route('posts.destroy', id), {
+    form.delete(route('categories.destroy', id), {
         onSuccess: () => closeModal()
     })
 }
 
 const props = defineProps({
-    posts: Object,
+    categories: Object,
     filters: Object,
     total: Number,
 });
@@ -40,7 +40,7 @@ const search = ref(props.filters.search);
 const perPage = ref(5);
 watch(search, (value) => {
     router.get(
-        "posts",
+        "categories",
         { search: value, perPage: perPage.value },
         {
             preserveState: true,
@@ -49,9 +49,9 @@ watch(search, (value) => {
     );
 });
 
-function getPosts() {
+function getCategories() {
     router.get(
-        "posts",
+        "categories",
         { perPage: perPage.value, search: search.value },
         {
             preserveState: true,
@@ -66,7 +66,7 @@ function getPosts() {
 
 function changePage(page) {
     router.get(
-        "posts",
+        "categories",
         { perPage: perPage.value, search: search.value, page },
         {
             preserveState: true,
@@ -80,7 +80,7 @@ function changePage(page) {
 </script>
 
 <template>
-    <Head title="Post" />
+    <Head title="Category" />
 
     <AdminLayout>
 
@@ -91,12 +91,12 @@ function changePage(page) {
                         <div class="flex justify-between items-center">
                             <div>
                                 <template v-if="hasPermission('create post')">
-                                    <Link :href="route('posts.create')" :active="route().current('Posts.index')"
+                                    <Link :href="route('categories.create')" :active="route().current('categories.index')"
                                         class="py-2.5 px-5 mr-2 mb-2 border border-gray-500 focus:outline-none text-purple-500 bg-white hover:bg-gray-100 focus:ring-2 focus:ring-purple-200 font-medium rounded-lg text-sm dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
                                     Add New</Link>
                                 </template>
 
-                                <select v-model="perPage" @change="getPosts" id="countries"
+                                <select v-model="perPage" @change="getCategories" id="countries"
                                     class="p-2 pl-5 w-40 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-500 focus:ring-2 focus:ring-purple-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option value="5">5 Per Page</option>
                                     <option value="10">10 Per Page</option>
@@ -128,7 +128,10 @@ function changePage(page) {
                                         Id
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Title
+                                        Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Image
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Actions
@@ -136,18 +139,21 @@ function changePage(page) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="post in posts.data" :key="post.id"
+                                <tr v-for="category in categories.data" :key="category.id"
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ post.id }}
+                                        {{ category.id }}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{ post.title }}
+                                        {{ category.name }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <img :src="category.image" class="w-12 h-12 rounded-full shadow-lg">
                                     </td>
                                     <td class="flex py-4 px-6 space-x-3">
                                         <template v-if="hasPermission('update post')">
-                                            <Link :href="route('posts.edit', post.id)" class="hover:bg-purple-100">
+                                            <Link :href="route('categories.edit', category.id)" class="hover:bg-purple-100">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                                 class="w-6 h-6">
                                                 <path
@@ -173,9 +179,9 @@ function changePage(page) {
                                         <Modal :show="showConfirmDeletePostModal" @close="closeModal">
                                             <div class="p-6">
                                                 <h2 class="text-lg font-semibold text-slate-800">Are you sure to delete this
-                                                    Post?</h2>
+                                                    Category?</h2>
                                                 <div class="mt-6 flex space-x-4">
-                                                    <DangerButton @click="deletePost(post.id)">Delete</DangerButton>
+                                                    <DangerButton @click="deletePost(category.id)">Delete</DangerButton>
                                                     <SecondaryButton @click="closeModal">Cancel</SecondaryButton>
                                                 </div>
                                             </div>
@@ -186,9 +192,9 @@ function changePage(page) {
                         </table>
                         <!-- Pagination -->
                         <div class="flex justify-between">
-                            <Pagination :currentPage="posts.current_page" :lastPage="posts.last_page"
+                            <Pagination :currentPage="categories.current_page" :lastPage="categories.last_page"
                             :onPageChange="page => changePage(page)" />
-                        <Pagination :links="posts.links" :total="total" />
+                        <Pagination :links="categories.links" :total="total" />
                         </div>
 
 

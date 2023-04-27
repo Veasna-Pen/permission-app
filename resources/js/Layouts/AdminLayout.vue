@@ -19,7 +19,7 @@ const { hasRole } = usePermission();
             class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
             <div>
                 <div class="-mx-6 px-6 py-4">
-                    <Link href="/dashboard" title="home">
+                    <Link href="/" title="home">
                     <h1 class="text-xl"> {{ $page.props.auth.user.name }}</h1>
                     </Link>
                 </div>
@@ -86,6 +86,21 @@ const { hasRole } = usePermission();
                                         class="fill-current group-hover:text-sky-300"></path>
                                 </svg>
                                 <span class="-mr-1 font-medium">Permissions</span>
+                            </SidebarLink>
+                        </li>
+                        <li>
+                            <SidebarLink :href="route('categories.index')" aria-label="dashboard"
+                                :active="route().current('categories.index')">
+                                <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current text-cyan-400 dark:fill-slate-600"></path>
+                                    <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
+                                        class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
+                                    <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
+                                        class="fill-current group-hover:text-sky-300"></path>
+                                </svg>
+                                <span class="-mr-1 font-medium">Categories</span>
                             </SidebarLink>
                         </li>
                     </template>
